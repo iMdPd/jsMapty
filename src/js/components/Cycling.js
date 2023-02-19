@@ -1,8 +1,8 @@
-import { Workout } from "./Workout.js";
+import { Activity } from "./Activity.js";
 
-export class Cycling extends Workout {
-  constructor(elevation, ...workoutParams) {
-    super(...workoutParams);
+export class Cycling extends Activity {
+  constructor(elevation, ...activityParams) {
+    super(...activityParams);
 
     this.elevation = elevation;
 

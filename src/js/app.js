@@ -1,9 +1,18 @@
-import { Map } from "./components/Map.js";
+import { Workout } from "./components/Workout.js";
 
-const app = {
-  getData: function () {
-    const thisApp = this;
-    thisApp.months = [
+class App {
+  constructor() {
+    const form = document.querySelector(".form");
+
+    this.getData();
+    this.getLocation();
+    this.switchInput();
+
+    form.addEventListener("submit", this.createNewWorkout.bind(this));
+  }
+
+  getData() {
+    const months = [
       "January",
       "February",
       "March",
@@ -18,47 +27,59 @@ const app = {
       "December",
     ];
 
-    thisApp.containerWorkouts = document.querySelector(".workouts");
-    thisApp.inputType = document.querySelector(".form__input--type");
-    thisApp.inputDistance = document.querySelector(".form__input--distance");
-    thisApp.inputDuration = document.querySelector(".form__input--duration");
-    thisApp.inputCadence = document.querySelector(".form__input--cadence");
-    thisApp.inputElevation = document.querySelector(".form__input--elevation");
-  },
+    this.form = document.querySelector(".form");
+    this.inputType = document.querySelector(".form__input--type");
+    this.inputCadence = document.querySelector(".form__input--cadence");
+    this.inputElevation = document.querySelector(".form__input--elevation");
+  }
 
-  getLocation: function () {
+  getLocation() {
     if (navigator.geolocation) {
-      window.navigator.geolocation.getCurrentPosition((locations) => {
-        const { latitude, longitude } = locations.coords;
-
-        new Map(latitude, longitude);
-
-        (error) => {
-          alert(error.message);
-        };
+      navigator.geolocation.getCurrentPosition((locations) => {
+        this.renderMap(locations),
+          (error) => {
+            alert(error.message);
+          };
       });
     }
-  },
+  }
 
-  switchInput: function () {
-    const thisApp = this;
-    const inputCadenceParent = thisApp.inputCadence.closest(".form__row");
-    const inputElevationParent = thisApp.inputElevation.closest(".form__row");
+  renderMap(position) {
+    const { latitude, longitude } = position.coords;
 
-    thisApp.inputType.addEventListener("change", function () {
+    this.map = L.map("map", {
+      center: [latitude, longitude],
+      zoom: 13,
+    });
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(this.map);
+
+    this.map.on("click", this.displayForm.bind(this));
+  }
+
+  displayForm(event) {
+    this.pointerCoords = event.latlng;
+    this.form.classList.remove("hidden");
+  }
+
+  switchInput() {
+    const inputCadenceParent = this.inputCadence.closest(".form__row");
+    const inputElevationParent = this.inputElevation.closest(".form__row");
+
+    this.inputType.addEventListener("change", function () {
       inputCadenceParent.classList.toggle("form__row--hidden");
       inputElevationParent.classList.toggle("form__row--hidden");
     });
-  },
+  }
 
-  init: function () {
-    const thisApp = this;
-    console.log("*** App starting ***");
+  createNewWorkout(e) {
+    e.preventDefault();
 
-    thisApp.getData();
-    thisApp.getLocation();
-    thisApp.switchInput();
-  },
-};
+    new Workout(this.pointerCoords);
+  }
+}
 
-app.init();
+const app = new App();
