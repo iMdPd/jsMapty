@@ -1,15 +1,20 @@
 import { Workout } from "./components/Workout.js";
-import { dataSource } from "./data.js";
+
 class App {
   constructor() {
     this.workouts = [];
 
+    this.getLocalStorage();
     this.getData();
-    this.initData();
-
     this.getLocation();
     this.switchInput();
     this.form.addEventListener("submit", this.createNewWorkout.bind(this));
+  }
+
+  getLocalStorage() {
+    const localData = JSON.parse(localStorage.getItem("workoutsData"));
+
+    this.workouts = localData;
   }
 
   getData() {
@@ -17,12 +22,6 @@ class App {
     this.inputType = document.querySelector(".form__input--type");
     this.inputCadence = document.querySelector(".form__input--cadence");
     this.inputElevation = document.querySelector(".form__input--elevation");
-  }
-
-  initData() {
-    this.data = dataSource.workouts;
-
-    console.log(this.data);
   }
 
   getLocation() {

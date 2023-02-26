@@ -86,9 +86,11 @@ export class Workout {
     }
 
     this.workouts.push(workout);
+    console.log(this.workouts);
     this.setInputsToDefault();
     this.addWorkoutMarker(workout);
     this.addWorkoutForm(workout);
+    this.setLocalStorage();
   }
 
   hasOnlyPositiveNumbers(params) {
@@ -122,9 +124,9 @@ export class Workout {
       .openPopup();
   }
 
-  addWorkoutForm() {
-
-    
-
+  setLocalStorage() {
+    localStorage.setItem("workoutsData", JSON.stringify(this.workouts));
   }
+
+  addWorkoutForm() {}
 }
