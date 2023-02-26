@@ -4,11 +4,12 @@ class App {
   constructor() {
     this.workouts = [];
 
-    this.getLocalStorage();
     this.getData();
     this.getLocation();
+
     this.switchInput();
     this.form.addEventListener("submit", this.createNewWorkout.bind(this));
+    this.getLocalStorage();
   }
 
   getLocalStorage() {
@@ -17,9 +18,9 @@ class App {
     if (localData) {
       this.workouts = localData;
     }
-  }
 
-  renderWorkouts() {}
+    console.log(this.workouts);
+  }
 
   getData() {
     this.form = document.querySelector(".form");
@@ -52,6 +53,20 @@ class App {
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
+    this.workouts.forEach(({ latitude, longitude, type, description }) => {
+      L.marker([latitude, longitude])
+        .addTo(this.map)
+        .bindPopup(
+          L.popup({
+            className: `${type}-popup`,
+            autoClose: false,
+            closeOnClick: false,
+          })
+        )
+        .setPopupContent(`${description}`)
+        .openPopup();
+    });
+
     this.map.on("click", this.displayForm.bind(this));
   }
 
@@ -73,7 +88,11 @@ class App {
   createNewWorkout(e) {
     e.preventDefault();
 
-    new Workout(this.pointerCoords, this.workouts, this.map);
+    this.workoutInstance = new Workout(
+      this.pointerCoords,
+      this.workouts,
+      this.map
+    );
   }
 }
 

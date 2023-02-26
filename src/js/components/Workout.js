@@ -72,7 +72,8 @@ export class Workout {
         lng,
         this.inputType.value,
         this.inputDistance.value,
-        this.inputDuration.value
+        this.inputDuration.value,
+        this.description
       );
     } else {
       workout = new Running(
@@ -81,9 +82,11 @@ export class Workout {
         lng,
         this.inputType.value,
         this.inputDistance.value,
-        this.inputDuration.value
+        this.inputDuration.value,
+        this.description
       );
     }
+    console.log(workout);
 
     this.workouts.push(workout);
     console.log(this.workouts);
@@ -110,17 +113,18 @@ export class Workout {
     this.form.classList.add("hidden");
   }
 
-  addWorkoutMarker({ latitude, longitude }) {
+  addWorkoutMarker({ latitude, longitude, type, description }) {
+    console.log(description, type);
     L.marker([latitude, longitude])
       .addTo(this.map)
       .bindPopup(
         L.popup({
-          className: `${this.inputType.value}-popup`,
+          className: `${type}-popup`,
           autoClose: false,
           closeOnClick: false,
         })
       )
-      .setPopupContent(`${this.description}`)
+      .setPopupContent(`${description}`)
       .openPopup();
   }
 
