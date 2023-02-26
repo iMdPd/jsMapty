@@ -14,8 +14,12 @@ class App {
   getLocalStorage() {
     const localData = JSON.parse(localStorage.getItem("workoutsData"));
 
-    this.workouts = localData;
+    if (localData) {
+      this.workouts = localData;
+    }
   }
+
+  renderWorkouts() {}
 
   getData() {
     this.form = document.querySelector(".form");
