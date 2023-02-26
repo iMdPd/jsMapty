@@ -35,13 +35,13 @@ export class Workout {
       "December",
     ];
 
-    let WorkoutSymbol;
+    this.WorkoutSymbol;
 
     this.inputType.value === "running"
-      ? (WorkoutSymbol = "🏃‍♂️")
-      : (WorkoutSymbol = "🚴‍♀️");
+      ? (this.WorkoutSymbol = "🏃‍♂️")
+      : (this.WorkoutSymbol = "🚴‍♀️");
 
-    this.description = `${WorkoutSymbol} ${
+    this.description = `${this.WorkoutSymbol} ${
       this.inputType.value.toUpperCase().slice(0, 1) +
       this.inputType.value.substring(1)
     } on ${date.getDate()} ${months[date.getMonth()]} `;
@@ -88,6 +88,7 @@ export class Workout {
     this.workouts.push(workout);
     this.setInputsToDefault();
     this.addWorkoutMarker(workout);
+    this.addWorkoutForm(workout);
   }
 
   hasOnlyPositiveNumbers(params) {
@@ -107,7 +108,7 @@ export class Workout {
     this.form.classList.add("hidden");
   }
 
-  addWorkoutMarker({ latitude, longitude, type }) {
+  addWorkoutMarker({ latitude, longitude }) {
     L.marker([latitude, longitude])
       .addTo(this.map)
       .bindPopup(
@@ -119,5 +120,11 @@ export class Workout {
       )
       .setPopupContent(`${this.description}`)
       .openPopup();
+  }
+
+  addWorkoutForm() {
+
+    
+
   }
 }
