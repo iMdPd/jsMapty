@@ -35,6 +35,9 @@ export class Workout {
       "December",
     ];
 
+    this.dateId = date.getTime();
+    console.log(this.dateId);
+
     this.WorkoutSymbol;
 
     this.inputType.value === "running"
@@ -73,7 +76,9 @@ export class Workout {
         this.inputType.value,
         this.inputDistance.value,
         this.inputDuration.value,
-        this.description
+        this.description,
+        this.dateId,
+        this.WorkoutSymbol
       );
     } else {
       workout = new Running(
@@ -83,7 +88,9 @@ export class Workout {
         this.inputType.value,
         this.inputDistance.value,
         this.inputDuration.value,
-        this.description
+        this.description,
+        this.dateId,
+        this.WorkoutSymbol
       );
     }
     console.log(workout);
