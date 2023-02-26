@@ -2,13 +2,12 @@ import { Workout } from "./components/Workout.js";
 
 class App {
   constructor() {
-    const form = document.querySelector(".form");
+    this.workouts = [];
 
     this.getData();
     this.getLocation();
     this.switchInput();
-
-    form.addEventListener("submit", this.createNewWorkout.bind(this));
+    this.form.addEventListener("submit", this.createNewWorkout.bind(this));
   }
 
   getData() {
@@ -78,7 +77,7 @@ class App {
   createNewWorkout(e) {
     e.preventDefault();
 
-    new Workout(this.pointerCoords);
+    new Workout(this.pointerCoords, this.workouts);
   }
 }
 

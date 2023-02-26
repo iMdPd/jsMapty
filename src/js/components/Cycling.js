@@ -10,6 +10,5 @@ export class Cycling extends Activity {
   }
   calculateSpeed() {
     this.speed = ((this.distance / this.duration) * 60).toFixed(1);
-    console.log(this.speed);
   }
 }

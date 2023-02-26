@@ -11,6 +11,5 @@ export class Running extends Activity {
 
   calculateSpeed() {
     this.speed = (this.duration / this.distance).toFixed(1);
-    console.log(this.speed);
   }
 }

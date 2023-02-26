@@ -2,10 +2,11 @@ import { Running } from "./Running.js";
 import { Cycling } from "./Cycling.js";
 
 export class Workout {
-  constructor(coords) {
+  constructor(coords, workouts) {
     const { lat, lng } = coords;
 
-    console.log(lat, lng);
+    this.workouts = workouts;
+
     this.getData();
     this.newWorkout(lat, lng);
   }
@@ -21,6 +22,7 @@ export class Workout {
 
   newWorkout(lat, lng) {
     const inputValues = [this.inputDistance.value, this.inputDuration.value];
+    let workout;
 
     this.inputType.value === "running"
       ? inputValues.push(this.inputCadence.value)
@@ -37,7 +39,7 @@ export class Workout {
     }
 
     if (this.inputType.value === "cycling") {
-      const cycling = new Cycling(
+      workout = new Cycling(
         this.inputElevation.value,
         lat,
         lng,
@@ -45,10 +47,8 @@ export class Workout {
         this.inputDistance.value,
         this.inputDuration.value
       );
-      console.log(cycling);
-      console.log("CYCLING");
     } else {
-      const running = new Running(
+      workout = new Running(
         this.inputCadence.value,
         lat,
         lng,
@@ -56,9 +56,10 @@ export class Workout {
         this.inputDistance.value,
         this.inputDuration.value
       );
-      console.log(running);
-      console.log("RUNNING");
     }
+
+    thisWorkout.workouts.push(workout);
+
     this.setInputsToDefault();
   }
 
@@ -76,7 +77,6 @@ export class Workout {
       this.inputDistance.value =
       this.inputDuration.value =
         "";
-    this.inputType.value = this.inputType[0].value;
     this.form.classList.add("hidden");
   }
 }
