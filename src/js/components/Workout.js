@@ -2,11 +2,11 @@ import { Running } from "./Running.js";
 import { Cycling } from "./Cycling.js";
 
 export class Workout {
-  constructor(coords, workouts) {
+  constructor(coords, workouts, map) {
     const { lat, lng } = coords;
 
     this.workouts = workouts;
-
+    this.map = map;
     this.getData();
     this.newWorkout(lat, lng);
   }
@@ -18,6 +18,33 @@ export class Workout {
     this.inputType = document.querySelector(".form__input--type");
     this.inputCadence = document.querySelector(".form__input--cadence");
     this.inputElevation = document.querySelector(".form__input--elevation");
+
+    const date = new Date();
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let WorkoutSymbol;
+
+    this.inputType.value === "running"
+      ? (WorkoutSymbol = "🏃‍♂️")
+      : (WorkoutSymbol = "🚴‍♀️");
+
+    this.description = `${WorkoutSymbol} ${
+      this.inputType.value.toUpperCase().slice(0, 1) +
+      this.inputType.value.substring(1)
+    } on ${date.getDate()} ${months[date.getMonth()]} `;
   }
 
   newWorkout(lat, lng) {
@@ -58,9 +85,9 @@ export class Workout {
       );
     }
 
-    thisWorkout.workouts.push(workout);
-
+    this.workouts.push(workout);
     this.setInputsToDefault();
+    this.addWorkoutMarker(workout);
   }
 
   hasOnlyPositiveNumbers(params) {
@@ -78,5 +105,12 @@ export class Workout {
       this.inputDuration.value =
         "";
     this.form.classList.add("hidden");
+  }
+
+  addWorkoutMarker({ latitude, longitude, type }) {
+    L.marker([latitude, longitude])
+      .addTo(this.map)
+      .bindPopup(`${this.description}`)
+      .openPopup();
   }
 }

@@ -11,21 +11,6 @@ class App {
   }
 
   getData() {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
     this.form = document.querySelector(".form");
     this.inputType = document.querySelector(".form__input--type");
     this.inputCadence = document.querySelector(".form__input--cadence");
@@ -77,7 +62,7 @@ class App {
   createNewWorkout(e) {
     e.preventDefault();
 
-    new Workout(this.pointerCoords, this.workouts);
+    new Workout(this.pointerCoords, this.workouts, this.map);
   }
 }
 
