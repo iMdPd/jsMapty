@@ -110,7 +110,14 @@ export class Workout {
   addWorkoutMarker({ latitude, longitude, type }) {
     L.marker([latitude, longitude])
       .addTo(this.map)
-      .bindPopup(`${this.description}`)
+      .bindPopup(
+        L.popup({
+          className: `${this.inputType.value}-popup`,
+          autoClose: false,
+          closeOnClick: false,
+        })
+      )
+      .setPopupContent(`${this.description}`)
       .openPopup();
   }
 }
