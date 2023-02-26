@@ -66,8 +66,22 @@ class App {
         .setPopupContent(`${description}`)
         .openPopup();
     });
-
+    this.renderWorkoutForm();
     this.map.on("click", this.displayForm.bind(this));
+  }
+
+  renderWorkoutForm() {
+    const form = document.querySelector(".form");
+    const templates = {
+      workout: Handlebars.compile(
+        document.querySelector("#workout-template").innerHTML
+      ),
+    };
+    this.workouts.forEach((workout) => {
+      const generatedHTML = templates.workout(workout);
+
+      form.insertAdjacentHTML("afterend", generatedHTML);
+    });
   }
 
   displayForm(event) {

@@ -36,15 +36,14 @@ export class Workout {
     ];
 
     this.dateId = date.getTime();
-    console.log(this.dateId);
 
-    this.WorkoutSymbol;
+    this.workoutSymbol;
 
     this.inputType.value === "running"
-      ? (this.WorkoutSymbol = "🏃‍♂️")
-      : (this.WorkoutSymbol = "🚴‍♀️");
+      ? (this.workoutSymbol = "🏃‍♂️")
+      : (this.workoutSymbol = "🚴‍♀️");
 
-    this.description = `${this.WorkoutSymbol} ${
+    this.description = `${
       this.inputType.value.toUpperCase().slice(0, 1) +
       this.inputType.value.substring(1)
     } on ${date.getDate()} ${months[date.getMonth()]} `;
@@ -78,7 +77,7 @@ export class Workout {
         this.inputDuration.value,
         this.description,
         this.dateId,
-        this.WorkoutSymbol
+        this.workoutSymbol
       );
     } else {
       workout = new Running(
@@ -90,17 +89,16 @@ export class Workout {
         this.inputDuration.value,
         this.description,
         this.dateId,
-        this.WorkoutSymbol
+        this.workoutSymbol
       );
     }
-    console.log(workout);
 
     this.workouts.push(workout);
-    console.log(this.workouts);
     this.setInputsToDefault();
     this.addWorkoutMarker(workout);
     this.addWorkoutForm(workout);
     this.setLocalStorage();
+    this.renderWorkoutForm(workout);
   }
 
   hasOnlyPositiveNumbers(params) {
@@ -120,23 +118,36 @@ export class Workout {
     this.form.classList.add("hidden");
   }
 
-  addWorkoutMarker({ latitude, longitude, type, description }) {
-    console.log(description, type);
+  addWorkoutMarker({ latitude, longitude, type, description, workoutSymbol }) {
     L.marker([latitude, longitude])
       .addTo(this.map)
       .bindPopup(
         L.popup({
-          className: `${type}-popup`,
+          className: ` ${type}-popup`,
           autoClose: false,
           closeOnClick: false,
         })
       )
-      .setPopupContent(`${description}`)
+      .setPopupContent(`${workoutSymbol} ${description}`)
       .openPopup();
   }
 
   setLocalStorage() {
     localStorage.setItem("workoutsData", JSON.stringify(this.workouts));
+  }
+
+  renderWorkoutForm(data) {
+    const form = document.querySelector(".form");
+
+    const templates = {
+      workout: Handlebars.compile(
+        document.querySelector("#workout-template").innerHTML
+      ),
+    };
+
+    const generatedHTML = templates.workout(data);
+
+    form.insertAdjacentHTML("afterend", generatedHTML);
   }
 
   addWorkoutForm() {}
