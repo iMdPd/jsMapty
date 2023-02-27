@@ -141,7 +141,7 @@ export class Workout {
 
     const templates = {
       workout: Handlebars.compile(
-        document.querySelector("#workout-template").innerHTML
+        document.querySelector("#workout-summary-template").innerHTML
       ),
     };
 
