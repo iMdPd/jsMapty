@@ -1,4 +1,5 @@
 import { Workout } from "./components/Workout.js";
+import { templates } from "./settings.js";
 
 class App {
   constructor() {
@@ -7,7 +8,6 @@ class App {
     this.getData();
     this.getLocalStorage();
     this.getLocation();
-    this.renderLocalDataDetails();
     this.switchInput();
     this.form.addEventListener("submit", this.createNewWorkout.bind(this));
   }
@@ -52,6 +52,7 @@ class App {
     }).addTo(this.map);
 
     this.map.on("click", this.displayForm.bind(this));
+    this.renderLocalStorageData();
   }
 
   displayForm(event) {
@@ -69,26 +70,22 @@ class App {
     });
   }
 
-  renderLocalDataDetails() {
+  renderLocalStorageData() {
     this.workouts.forEach((workout) => {
       this.renderForm(workout);
-      this.renderMarker;
+      this.renderMarker(workout);
     });
   }
 
   renderForm(workout) {
-    const templates = {
-      workout: Handlebars.compile(
-        document.querySelector("#workout-summary-template").innerHTML
-      ),
-    };
     const generatedHTML = templates.workout(workout);
     this.form.insertAdjacentHTML("afterend", generatedHTML);
   }
 
   renderMarker(workout) {
-    const { latitude, longitude, type, description, workoutSymbol } = workout;
+    console.log(this.map);
 
+    const { latitude, longitude, type, description, workoutSymbol } = workout;
     L.marker([latitude, longitude])
       .addTo(this.map)
       .bindPopup(
