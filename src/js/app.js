@@ -76,7 +76,6 @@ class App {
 
   renderLocalStorageData() {
     this.workouts.forEach((workout) => {
-      console.log(workout);
       this.renderForm(workout);
       this.renderMarker(workout);
     });
