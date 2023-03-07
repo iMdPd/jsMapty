@@ -1,4 +1,4 @@
-import { Activity } from "./Activity.js";
+import { Activity } from './Activity.js';
 
 export class Running extends Activity {
   constructor(cadence, ...activityParams) {

@@ -1,4 +1,4 @@
-import { Activity } from "./Activity.js";
+import { Activity } from './Activity.js';
 
 export class Cycling extends Activity {
   constructor(elevation, ...activityParams) {

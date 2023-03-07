@@ -1,5 +1,5 @@
 export const templates = {
   workout: Handlebars.compile(
-    document.querySelector("#workout-summary-template").innerHTML
+    document.querySelector('#workout-summary-template').innerHTML
   ),
 };

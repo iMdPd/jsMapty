@@ -1,5 +1,5 @@
-import { Workout } from "./components/Workout.js";
-import { templates } from "./settings.js";
+import { Workout } from './components/Workout.js';
+import { templates } from './settings.js';
 
 class App {
   constructor() {
@@ -9,18 +9,18 @@ class App {
     this.getLocalStorage();
     this.getLocation();
     this.switchInput();
-    this.form.addEventListener("submit", this.createNewWorkout.bind(this));
+    this.form.addEventListener('submit', this.createNewWorkout.bind(this));
   }
 
   getData() {
-    this.form = document.querySelector(".form");
-    this.inputType = document.querySelector(".form__input--type");
-    this.inputCadence = document.querySelector(".form__input--cadence");
-    this.inputElevation = document.querySelector(".form__input--elevation");
+    this.form = document.querySelector('.form');
+    this.inputType = document.querySelector('.form__input--type');
+    this.inputCadence = document.querySelector('.form__input--cadence');
+    this.inputElevation = document.querySelector('.form__input--elevation');
   }
 
   getLocalStorage() {
-    const localData = JSON.parse(localStorage.getItem("workoutsData"));
+    const localData = JSON.parse(localStorage.getItem('workoutsData'));
 
     if (localData) {
       this.workouts = localData;
@@ -41,32 +41,32 @@ class App {
   }
 
   renderMap({ latitude, longitude }) {
-    this.map = L.map("map", {
+    this.map = L.map('map', {
       center: [latitude, longitude],
       zoom: 13,
     });
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
-    this.map.on("click", this.displayForm.bind(this));
+    this.map.on('click', this.displayForm.bind(this));
     this.renderLocalStorageData();
   }
 
   displayForm(event) {
     this.pointerCoords = event.latlng;
-    this.form.classList.remove("hidden");
+    this.form.classList.remove('hidden');
   }
 
   switchInput() {
-    const inputCadenceParent = this.inputCadence.closest(".form__row");
-    const inputElevationParent = this.inputElevation.closest(".form__row");
+    const inputCadenceParent = this.inputCadence.closest('.form__row');
+    const inputElevationParent = this.inputElevation.closest('.form__row');
 
-    this.inputType.addEventListener("change", function () {
-      inputCadenceParent.classList.toggle("form__row--hidden");
-      inputElevationParent.classList.toggle("form__row--hidden");
+    this.inputType.addEventListener('change', function () {
+      inputCadenceParent.classList.toggle('form__row--hidden');
+      inputElevationParent.classList.toggle('form__row--hidden');
     });
   }
 
@@ -79,7 +79,7 @@ class App {
 
   renderForm(workout) {
     const generatedHTML = templates.workout(workout);
-    this.form.insertAdjacentHTML("afterend", generatedHTML);
+    this.form.insertAdjacentHTML('afterend', generatedHTML);
   }
 
   renderMarker(workout) {
@@ -110,4 +110,4 @@ class App {
   }
 }
 
-const app = new App();
+const app = new App(); // eslint-disable-line
