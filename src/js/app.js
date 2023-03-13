@@ -10,21 +10,19 @@ class App {
     this.getLocation();
     this.switchInput();
 
-
-    this.form.addEventListener("submit", this.createNewWorkout.bind(this));
+    this.form.addEventListener('submit', this.createNewWorkout.bind(this));
     this.workoutsContainer.addEventListener(
-      "click",
+      'click',
       this.centerWorkoutMarker.bind(this)
     );
   }
 
   getData() {
-    this.form = document.querySelector(".form");
-    this.inputType = document.querySelector(".form__input--type");
-    this.inputCadence = document.querySelector(".form__input--cadence");
-    this.inputElevation = document.querySelector(".form__input--elevation");
-    this.workoutsContainer = document.querySelector(".workouts");
-
+    this.form = document.querySelector('.form');
+    this.inputType = document.querySelector('.form__input--type');
+    this.inputCadence = document.querySelector('.form__input--cadence');
+    this.inputElevation = document.querySelector('.form__input--elevation');
+    this.workoutsContainer = document.querySelector('.workouts');
   }
 
   getLocalStorage() {
@@ -63,7 +61,8 @@ class App {
 
   displayForm(map) {
     this.pointerCoords = map.latlng;
-    this.form.classList.remove("hidden");
+    this.form.classList.remove('hidden');
+  }
 
   switchInput() {
     const inputCadenceParent = this.inputCadence.closest('.form__row');
@@ -113,7 +112,7 @@ class App {
   }
 
   centerWorkoutMarker(e) {
-    const workoutFormId = e.target.closest(".workout").dataset.id;
+    const workoutFormId = e.target.closest('.workout').dataset.id;
 
     const matchingWorkout = this.workouts.find(
       (workout) => workout.dateId == workoutFormId
