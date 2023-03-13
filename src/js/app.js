@@ -9,14 +9,22 @@ class App {
     this.getLocalStorage();
     this.getLocation();
     this.switchInput();
-    this.form.addEventListener('submit', this.createNewWorkout.bind(this));
+
+
+    this.form.addEventListener("submit", this.createNewWorkout.bind(this));
+    this.workoutsContainer.addEventListener(
+      "click",
+      this.centerWorkoutMarker.bind(this)
+    );
   }
 
   getData() {
-    this.form = document.querySelector('.form');
-    this.inputType = document.querySelector('.form__input--type');
-    this.inputCadence = document.querySelector('.form__input--cadence');
-    this.inputElevation = document.querySelector('.form__input--elevation');
+    this.form = document.querySelector(".form");
+    this.inputType = document.querySelector(".form__input--type");
+    this.inputCadence = document.querySelector(".form__input--cadence");
+    this.inputElevation = document.querySelector(".form__input--elevation");
+    this.workoutsContainer = document.querySelector(".workouts");
+
   }
 
   getLocalStorage() {
@@ -25,8 +33,6 @@ class App {
     if (localData) {
       this.workouts = localData;
     }
-
-    console.log(this.workouts);
   }
 
   getLocation() {
@@ -55,10 +61,9 @@ class App {
     this.renderLocalStorageData();
   }
 
-  displayForm(event) {
-    this.pointerCoords = event.latlng;
-    this.form.classList.remove('hidden');
-  }
+  displayForm(map) {
+    this.pointerCoords = map.latlng;
+    this.form.classList.remove("hidden");
 
   switchInput() {
     const inputCadenceParent = this.inputCadence.closest('.form__row');
@@ -83,8 +88,6 @@ class App {
   }
 
   renderMarker(workout) {
-    console.log(this.map);
-
     const { latitude, longitude, type, description, workoutSymbol } = workout;
     L.marker([latitude, longitude])
       .addTo(this.map)
@@ -107,6 +110,18 @@ class App {
       this.workouts,
       this.map
     );
+  }
+
+  centerWorkoutMarker(e) {
+    const workoutFormId = e.target.closest(".workout").dataset.id;
+
+    const matchingWorkout = this.workouts.find(
+      (workout) => workout.dateId == workoutFormId
+    );
+
+    const coords = [matchingWorkout.latitude, matchingWorkout.longitude];
+
+    this.map.setView(coords, 13);
   }
 }
 

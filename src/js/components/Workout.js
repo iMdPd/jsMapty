@@ -96,7 +96,6 @@ export class Workout {
     this.workouts.push(workout);
     this.setInputsToDefault();
     this.addWorkoutMarker(workout);
-    this.addWorkoutForm(workout);
     this.setLocalStorage();
     this.renderWorkoutForm(workout);
   }
@@ -149,6 +148,4 @@ export class Workout {
 
     form.insertAdjacentHTML('afterend', generatedHTML);
   }
-
-  addWorkoutForm() {}
 }
