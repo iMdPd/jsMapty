@@ -1,4 +1,4 @@
-export class Activity {
+export class Exercise {
   constructor(
     latitude,
     longitude,

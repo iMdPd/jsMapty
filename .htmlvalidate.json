@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "void-style": [
+      "error",
+      {
+        "style": "selfclosing"
+      }
+    ],
+    "attribute-empty-style": [
+      "error",
+      {
+        "style": "empty"
+      }
+    ]
+  }
+}

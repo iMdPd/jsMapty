@@ -1,5 +1,5 @@
-import { Running } from "./Running.js";
-import { Cycling } from "./Cycling.js";
+import { Running } from './Running.js';
+import { Cycling } from './Cycling.js';
 
 export class Workout {
   constructor(coords, workouts, map) {
@@ -12,36 +12,36 @@ export class Workout {
   }
 
   getData() {
-    this.form = document.querySelector(".form");
-    this.inputDistance = document.querySelector(".form__input--distance");
-    this.inputDuration = document.querySelector(".form__input--duration");
-    this.inputType = document.querySelector(".form__input--type");
-    this.inputCadence = document.querySelector(".form__input--cadence");
-    this.inputElevation = document.querySelector(".form__input--elevation");
+    this.form = document.querySelector('.form');
+    this.inputDistance = document.querySelector('.form__input--distance');
+    this.inputDuration = document.querySelector('.form__input--duration');
+    this.inputType = document.querySelector('.form__input--type');
+    this.inputCadence = document.querySelector('.form__input--cadence');
+    this.inputElevation = document.querySelector('.form__input--elevation');
 
     const date = new Date();
     const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
 
     this.dateId = date.getTime();
 
     this.workoutSymbol;
 
-    this.inputType.value === "running"
-      ? (this.workoutSymbol = "🏃‍♂️")
-      : (this.workoutSymbol = "🚴‍♀️");
+    this.inputType.value === 'running'
+      ? (this.workoutSymbol = '🏃‍♂️')
+      : (this.workoutSymbol = '🚴‍♀️');
 
     this.description = `${
       this.inputType.value.toUpperCase().slice(0, 1) +
@@ -53,21 +53,21 @@ export class Workout {
     const inputValues = [this.inputDistance.value, this.inputDuration.value];
     let workout;
 
-    this.inputType.value === "running"
+    this.inputType.value === 'running'
       ? inputValues.push(this.inputCadence.value)
       : inputValues.push(this.inputElevation.value);
 
     if (!this.hasOnlyNumbers(inputValues)) {
-      alert("Please type numbers!");
+      alert('Please type numbers!');
       return;
     }
 
     if (!this.hasOnlyPositiveNumbers(inputValues)) {
-      alert("Please type positive numbers!");
+      alert('Please type positive numbers!');
       return;
     }
 
-    if (this.inputType.value === "cycling") {
+    if (this.inputType.value === 'cycling') {
       workout = new Cycling(
         this.inputElevation.value,
         lat,
@@ -113,8 +113,8 @@ export class Workout {
       this.inputCadence.value =
       this.inputDistance.value =
       this.inputDuration.value =
-        "";
-    this.form.classList.add("hidden");
+        '';
+    this.form.classList.add('hidden');
   }
 
   addWorkoutMarker({ latitude, longitude, type, description, workoutSymbol }) {
@@ -132,20 +132,20 @@ export class Workout {
   }
 
   setLocalStorage() {
-    localStorage.setItem("workoutsData", JSON.stringify(this.workouts));
+    localStorage.setItem('workoutsData', JSON.stringify(this.workouts));
   }
 
   renderWorkoutForm(data) {
-    const form = document.querySelector(".form");
+    const form = document.querySelector('.form');
 
     const templates = {
       workout: Handlebars.compile(
-        document.querySelector("#workout-summary-template").innerHTML
+        document.querySelector('#workout-summary-template').innerHTML
       ),
     };
 
     const generatedHTML = templates.workout(data);
 
-    form.insertAdjacentHTML("afterend", generatedHTML);
+    form.insertAdjacentHTML('afterend', generatedHTML);
   }
 }
