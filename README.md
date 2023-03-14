@@ -36,7 +36,7 @@ The app was developed using JavaScript classes Handlebars template. Leaflet libr
 
 <p align="right">(<a  href="#readme-top">back to top</a>)</p>
 
-## 🛠️ <a id="languages">Languages & tools</a>
+## 🛠️ <a id="languages">Languages & tools :</a>
 
 |                                                                   Language / Tool                                                                    | Description                                                                 |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------- |
